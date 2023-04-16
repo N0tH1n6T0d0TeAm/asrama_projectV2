@@ -5,14 +5,50 @@ use App\Http\Controllers\SuperAppController;
 use App\Http\Controllers\AsramaProject;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+                                        ,   ,                                
+                                        $,  $,     ,                         
+                                        "ss.$ss. .s'                         
+                                ,     .ss$$$$$$$$$$s,                        
+                                $. s$$$$$$$$$$$$$$`$$Ss                      
+                                "$$$$$$$$$$$$$$$$$$o$$$       ,              
+                               s$$$$$$$$$$$$$$$$$$$$$$$$s,  ,s               
+                              s$$$$$$$$$"$$$$$$""""$$$$$$"$$$$$,             
+                              s$$$$$$$$$$s""$$$$ssssss"$$$$$$$$"             
+                             s$$$$$$$$$$'         `"""ss"$"$s""              
+                             s$$$$$$$$$$,              `"""""$  .s$$s        
+                             s$$$$$$$$$$$$s,...               `s$$'  `       
+                         `ssss$$$$$$$$$$$$$$$$$$$$####s.     .$$"$.   , s-   
+                           `""""$$$$$$$$$$$$$$$$$$$$#####$$$$$$"     $.$'    
+ Posable artist:                 "$$$$$$$$$$$$$$$$$$$$$####s""     .$$$|     
+   -Tua Xiong                      "$$$$$$$$$$$$$$$$$$$$$$$$##s    .$$" $    
+                                   $$""$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"   `    
+                                  $$"  "$"$$$$$$$$$$$$$$$$$$$$S""""'         
+                             ,   ,"     '  $$$$$$$$$$$$$$$$####s             
+                             $.          .s$$$$$$$$$$$$$$$$$####"            
+                 ,           "$s.   ..ssS$$$$$$$$$$$$$$$$$$$####"            
+                 $           .$$$S$$$$$$$$$$$$$$$$$$$$$$$$#####"             
+                 Ss     ..sS$$$$$$$$$$$$$$$$$$$$$$$$$$$######""              
+                  "$$sS$$$$$$$$$$$$$$$$$$$$$$$$$$$########"                  
+           ,      s$$$$$$$$$$$$$$$$$$$$$$$$#########""'                      
+           $    s$$$$$$$$$$$$$$$$$$$$$#######""'      s'         ,           
+           $$..$$$$$$$$$$$$$$$$$$######"'       ....,$$....    ,$            
+            "$$$$$$$$$$$$$$$######"' ,     .sS$$$$$$$$$$$$$$$$s$$            
+              $$$$$$$$$$$$#####"     $, .s$$$$$$$$$$$$$$$$$$$$$$$$s.         
+   )          $$$$$$$$$$$#####'      `$$$$$$$$$###########$$$$$$$$$$$.       
+  ((          $$$$$$$$$$$#####       $$$$$$$$###"       "####$$$$$$$$$$      
+  ) \         $$$$$$$$$$$$####.     $$$$$$###"             "###$$$$$$$$$   s'
+ (   )        $$$$$$$$$$$$$####.   $$$$$###"                ####$$$$$$$$s$$' 
+ )  ( (       $$"$$$$$$$$$$$#####.$$$$$###'                .###$$$$$$$$$$"   
+ (  )  )   _,$"   $$$$$$$$$$$$######.$$##'                .###$$$$$$$$$$     
+ ) (  ( \.         "$$$$$$$$$$$$$#######,,,.          ..####$$$$$$$$$$$"     
+(   )$ )  )        ,$$$$$$$$$$$$$$$$$$####################$$$$$$$$$$$"       
+(   ($$  ( \     _sS"  `"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$S$$,       
+ )  )$$$s ) )  .      .   `$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"'  `$$      
+  (   $$$Ss/  .$,    .$,,s$$$$$$##S$$$$$$$$$$$$$$$$$$$$$$$$S""        '      
+    \)_$$$$$$$$$$$$$$$$$$$$$$$##"  $$        `$$.        `$$.                
+        `"S$$$$$$$$$$$$$$$$$#"      $          `$          `$                
+            `"""""""""""""'         '           '           '
+
 */
 
 Route::get('/', function () {
@@ -24,7 +60,8 @@ Route::group(["middleware" => "auth"], function () {
 
     Route::get('laporan_harian',[AsramaProject::class,'tampil_laporan_harian'])->name('laporan_harian');
 
-    Route::get('detail_foto/{id}',[AsramaProject::class,'detail_foto']);
+    Route::get('edit_post/{id}',[AsramaProject::class,'edit_post']);
+
 
     Route::get('kembali/{id}',[AsramaProject::class,'kembali_home']);
     
@@ -37,7 +74,14 @@ Route::group(["middleware" => "auth"], function () {
     Route::view('postingan', 'laporan_asrama.postingan');
 
 
+    Route::view('laporan_perkembangan','laporan_asrama.laporan_perkembangan');
+    
+    Route::get('laporan_perkembangan',[AsramaProject::class,'detail_siswa']);
+    
+
     Route::view('test_saja', 'testing.mytest');
+
+    
 
 
     Route::get('/dashboard', [SuperAppController::class, "dashboard"])->name("dashboard");
