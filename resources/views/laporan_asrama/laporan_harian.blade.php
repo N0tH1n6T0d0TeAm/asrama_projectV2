@@ -369,7 +369,11 @@
         </div>
     </div>
 
-
+    <center>
+    <form action="cari_profil" method="GET">
+        <input type="search" autocomplete="off" class="form-control" name="nama" placeholder="Cari...">
+    </form>
+</center>
     <a href="#tambah"><button type="button" class="tambah">+</button></a>
 
 
@@ -383,8 +387,9 @@
 
             <img class="profil" src="https://wallpaperset.com/w/full/c/b/e/534560.jpg"> <b
                 style="margin-left: 3em;margin-top: -2.3em;">{{ $i->pengguna->name }} ({{ $i->role->name }}) <a
-                    href="#sub-pilihan"><i style="float: right; cursor: pointer"
+                    href="#sub-pilihan/{{$i->id_laporan}}"><i style="float: right; cursor: pointer"
                         class="bi bi-three-dots-vertical pilihan"></i></a></b><br>
+                        
             <a href="#detail/{{ $i->id_laporan }}" class="detail_gambar" post_detail="{{ $i->id_laporan }}"><img
                     class="card-img-top" src="{{ asset('postingan/' . $images[0]) }}" alt="Card image cap"></a>
 
@@ -400,10 +405,10 @@
 
 
 
-        <div id="sub-pilihan" class="overlay">
+        <div id="sub-pilihan/{{$i->id_laporan}}" class="overlay">
             <div class="info">
                 <div class="lol" style="background: black; text-align: center">
-                    <b><a href="/kembali/{{ $i->id_laporan }}" class="opsi_post" style="color: red;">Hapus</a></b><br>
+                    <b><a href="/kembali/{{ $i->id_laporan }}/" class="opsi_post" style="color: red;">Hapus</a></b><br>
                     <hr style="border: 1px solid #fff">
                     <a href="#edit" class="edit_post" id_post="{{ $i->id_laporan }}" style="color: #fff;">Edit</a>
                     <hr style="border: 1px solid #fff">

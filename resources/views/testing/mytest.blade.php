@@ -1,6 +1,6 @@
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-<style>
+{{-- <style>
  *{
     margin: 5px;
  }
@@ -89,3 +89,16 @@
   });
 </script> --}}
 
+<input type="checkbox" id="myCheckbox" value="Belum Dikerjakan">
+
+<script>
+  $(document).ready(function() {
+    $('#myCheckbox').change(function() {
+      if ($(this).is(':checked')) {
+        $(this).val('Sudah Dikerjakan');
+      } else {
+        $(this).val('Belum Dikerjakan');
+      }
+    });
+  });
+</script>

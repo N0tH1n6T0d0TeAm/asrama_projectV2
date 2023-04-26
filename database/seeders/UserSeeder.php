@@ -30,11 +30,11 @@ class UserSeeder extends Seeder
 
 
 
-        $user->assignRole("Admin");
+        $user->assignRole("Pamong Putra");
 
         $user = User::create([
 
-            'name' => 'Asrama Putra',
+            'name' => 'Pandu',
             'email' => 'pamong@putra.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -49,8 +49,8 @@ class UserSeeder extends Seeder
 
         $user = User::create([
 
-            'name' => 'Asrama Putri',
-            'email' => 'pamong@putri.com',
+            'name' => 'Josepht',
+            'email' => 'josep@josep.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'active' => 1,
@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
 
 
 
-        $user->assignRole("Pamong Putri");
+        $user->assignRole("Kepala Asrama");
 
         $user = User::create([
 

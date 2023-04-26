@@ -171,7 +171,8 @@ class SiswaSeeder extends Seeder
                                 "jenis_kelamin" => $row[3],
                                 "no_absen" => $row[0],
                                 "id_angkatan" => $row[16],
-                                "agama" => $row[8]
+                                "agama" => $row[8],
+                                "status" => "aktif",
                             ]);
     
                             $detailsiswa = DetailSiswa::create(

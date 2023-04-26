@@ -54,6 +54,7 @@ return new class extends Migration
             $table->string("tempat_lahir");
             $table->string("jenis_kelamin");
             $table->string("foto_profil")->nullable();
+            $table->enum("status",['aktif','tidak aktif','alumni'])->nullable();
             $table->foreign("id_jurusan")->references("id_jurusan")->on("jurusan");
             $table->foreign("id_angkatan")->references("id_angkatan")->on("angkatan");
         });

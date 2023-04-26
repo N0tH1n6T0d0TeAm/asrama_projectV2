@@ -46,6 +46,10 @@ class RoleSeeder extends Seeder
             "name"=>"Guru BK",
         ]);
 
+        Role::create([
+            "name" => "Kepala Asrama",
+        ]);
+
 
     }
 }
