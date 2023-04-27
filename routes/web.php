@@ -175,6 +175,8 @@ Route::group(["middleware" => "auth"], function () {
 
     Route::view('laporan-pdf','laporan_asrama.laporan-pdf');
 
+    Route::post('tambah_confidensial',[AsramaProject::class,'tambah_confidensial']);
+
     #-------------------------------------------------------------------------------------------------------------#
 
     Route::view('test_saja', 'testing.mytest');

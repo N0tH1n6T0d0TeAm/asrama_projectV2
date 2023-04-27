@@ -74,6 +74,7 @@ return array(
     'App\\Models\\ModelHasRoles' => $baseDir . '/app/Models/ModelHasRoles.php',
     'App\\Models\\ModelRole' => $baseDir . '/app/Models/ModelRole.php',
     'App\\Models\\Notification' => $baseDir . '/app/Models/Notification.php',
+    'App\\Models\\Password' => $baseDir . '/app/Models/Password.php',
     'App\\Models\\PengajuanKonseling' => $baseDir . '/app/Models/PengajuanKonseling.php',
     'App\\Models\\PenilaianGuru' => $baseDir . '/app/Models/PenilaianGuru.php',
     'App\\Models\\Project' => $baseDir . '/app/Models/Project.php',

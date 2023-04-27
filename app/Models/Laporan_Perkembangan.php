@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Confidence;
 
 class Laporan_Perkembangan extends Model
 {
@@ -21,5 +22,9 @@ class Laporan_Perkembangan extends Model
 
     public function siswa(){
         return $this->belongsTo(Siswa::class,'nis_siswas');
+    }
+
+    public function confidensial(){
+        return $this->belongsTo(Confidensial::class,'id_perkembangan');
     }
 }

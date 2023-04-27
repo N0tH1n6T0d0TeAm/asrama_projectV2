@@ -683,6 +683,7 @@ class ComposerStaticInit680f9d392ab776f0aea266bdd78b271e
         'App\\Models\\ModelHasRoles' => __DIR__ . '/../..' . '/app/Models/ModelHasRoles.php',
         'App\\Models\\ModelRole' => __DIR__ . '/../..' . '/app/Models/ModelRole.php',
         'App\\Models\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification.php',
+        'App\\Models\\Password' => __DIR__ . '/../..' . '/app/Models/Password.php',
         'App\\Models\\PengajuanKonseling' => __DIR__ . '/../..' . '/app/Models/PengajuanKonseling.php',
         'App\\Models\\PenilaianGuru' => __DIR__ . '/../..' . '/app/Models/PenilaianGuru.php',
         'App\\Models\\Project' => __DIR__ . '/../..' . '/app/Models/Project.php',

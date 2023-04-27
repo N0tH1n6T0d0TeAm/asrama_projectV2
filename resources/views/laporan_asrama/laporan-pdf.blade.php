@@ -26710,13 +26710,13 @@ body{
     </center>
 
     @foreach($data2 as $d)
-    @if($d->kategori->level_kategori == "Privasi" && $d->id_pengguna == auth()->user()->id)
+    @if($d->level_kategori == "Confidensial" && $d->confidensial->id_perkembangan == $d->id_perkembangan && auth()->user()->name == $d->confidensial->nama_pamong || auth()->user()->id == $d->id_pengguna)
     <div class="card" style="text-align: left;">
   <div class="card-header" style=" font-family: 'mulish',sans-serif;">
     {{$d->tanggal}}
   </div>
   <div class="card-body" style=" font-family: 'mulish',sans-serif;">
-    <h5 class="card-title">{{$d->judul_buku}} [{{$d->kategori->level_kategori ?? "Belum Diisi"}}]</h5>
+    <h5 class="card-title">{{$d->judul_buku}} [{{$d->level_kategori ?? "Belum Diisi"}}]</h5>
     <p class="card-text">Penulis: {{$d->pengguna->name}}</b></p>
     <p>
         {{$d->isi_buku ?? "Masih Belum Ada Deskripsi"}}
@@ -26725,13 +26725,13 @@ body{
   <hr style="border: 1px solid black">
 </div><br>
 
-@elseif($d->kategori->level_kategori == "Umum")
-<div class="card" style="text-align: left;">
+@elseif($d->level_kategori == "Umum")
+ <div class="card" style="text-align: left;">
   <div class="card-header" style=" font-family: 'mulish',sans-serif;">
     {{$d->tanggal}}
   </div>
   <div class="card-body" style=" font-family: 'mulish',sans-serif;">
-    <h5 class="card-title">{{$d->judul_buku}} [{{$d->kategori->level_kategori ?? "Belum Diisi"}}]</h5>
+    <h5 class="card-title">{{$d->judul_buku}} [{{$d->level_kategori ?? "Belum Diisi"}}]</h5>
     <p class="card-text">Penulis: {{$d->pengguna->name}}</b></p>
     <p>
         {{$d->isi_buku ?? "Masih Belum Ada Deskripsi"}}
@@ -26739,9 +26739,6 @@ body{
   </div>
   <hr style="border: 1px solid black">
 </div><br>
-
-@elseif($d->kategori->level_kategori == "Konfidensial")
-<script>prompt('Terdapat Data Konfidensial,Masukan Password Jika Ingin Melihat Data Konfidensial Juga')</script>
 @endif
 @endforeach
 </body>

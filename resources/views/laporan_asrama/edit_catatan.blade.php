@@ -28,6 +28,7 @@
     margin: 5px 10px auto;
     width: 90%;
 }
+
 .overlay .info select{
     margin: 5px 10px auto;
     width: 90%;
@@ -36,14 +37,13 @@
     margin-left: 5px;
 }
 .info .lol{
-    position: fixed;
     margin: 5% 30% auto;
     background: #fff;
     width: 40%;
     border-radius: 3px;
-    padding: 10px 0;
+    padding: 70px 0;
 }
-.lol button{
+.overlay .info button{
     float: right;
     margin: 10px;
 }
@@ -52,64 +52,31 @@ a.keluar{
     color: black;
     text-decoration: none;
 }
+.overlay .info .textarea{
+    width: 90%;
+    margin: 0 10px;
+}
 
+@media(max-width: 376px){
+    tbody{
+        font-size: 10px;
+    }
+}
 
-.info .lol .up_kats{
-        width: 90%;
+@media(max-width: 420px){
+    tbody{
+        font-size: 10px;
     }
-    .info .lol .update{
-        margin: -6.7% 19% auto;
-    }
-    .info .lol .hapus_kat{
+}
+@media(max-width: 282px){
+    table{
         position: relative;
-        top: -40px;
-        margin: 0 85% auto;
+        left: -1em;
     }
-
-    @media(max-width: 400px){
-         .info .lol .update{
-            padding: 6px;
-            position: relative;
-            top: -1.2em;
-        margin: -13% 22% auto;
+    tbody{
+        font-size: 7px;
     }
-    .info .lol .hapus_kat{
-        position: relative;
-        top: -30px;
-        padding: 6px;
-        margin: -15% 82% auto;
-    }
-    }
-
-    @media(max-width: 416px){
-         .info .lol .update{
-            padding: 6px;
-            position: relative;
-            top: -1.2em;
-        margin: -13% 22% auto;
-    }
-    .info .lol .hapus_kat{
-        position: relative;
-        top: -30px;
-        padding: 6px;
-        margin: -15% 82% auto;
-    }
-    }
-
-    @media(max-width: 281px){
-         .info .lol .update{
-            padding: 6px;
-            position: relative;
-            top: -1.2em;
-        margin: -13% 22% auto;
-    }
-    .info .lol .hapus_kat{
-        position: relative;
-        top: -30px;
-        padding: 6px;
-        margin: -15% 82% auto;
-    }
-    }
+}
 
 </style>
 
@@ -120,11 +87,10 @@ a.keluar{
         @method('PUT')
         <input type="hidden" name="ids" value="{{$data->id_perkembangan}}">
    <input type="text" value="{{$data->judul_buku}}" name="judul_buku" style="width: 50%" placeholder="Judul Catatan" class="form-control"> 
-   <select class="form-control" name="id_kategori" style="width: 20%; float:right; margin-top: -40px;">
+   <select class="form-control" name="level_kategori" id="halaman" style="width: 20%; float:right; margin-top: -40px;">
     <option value="">Kategori</option>
-    @foreach ($data2 as $d)
-    <option value="{{$d->id_kategori}}">{{$d->level_kategori}}</option>
-    @endforeach
+    <option value="Umum" {{$data->level_kategori == 'Umum' ? 'selected' : ''}}>Umum</option>
+    <option value="#confidensial" {{$data->level_kategori == 'Confidensial' ? 'selected' : ''}}>Confidensial</option>
    </select>
    <br>
    <a href="/catatan_perkembangan/{{$data->id_perkembangan}}" class="btn btn-info">Kembali</a>
@@ -140,30 +106,71 @@ a.keluar{
   </div>
 </div>
 
-{{-- <div id="tambah_kategori" class="overlay">
+<script>
+     $(document).ready(function(){
+    $('#halaman').on('change', function(){
+      var url = $(this).val();
+      if(url && url != "Umum"){
+        window.location = url;
+      }
+      return false;
+    });
+  });
+</script>
+
+ <div id="confidensial" class="overlay" style="overflow-y: scroll;">
     <div class="info">
         <div class="lol">
-    <form action="/tambah_kategori" method="POST">
+            <div class="isinya" style="margin-top: -3em;">
+    <form action="/tambah_confidensial" method="POST">
     @csrf
-    <h2>Tambah Kategori <a href="#" class="keluar">&times</a></h2>
+    <input type="hidden" name="id_perkembangan" value="{{$data->id_perkembangan}}">
+    <h2>Confidensial <a href="#" class="keluar">&times</a></h2>
 
     <hr style="border: 1px solid black;margin-top: -3px;">
-    <label>Level</label><br>
-    <select name="level_kategori" class="form-control">
-        <option value="Positifz">Positif</option>
-        <option value="Negatif">Negatif</option>
-    </select>
-
-    <label>Kategori</label><br>
-    <input class="form-control" type="text" name="nama_kategori" placeholder="Kategori" required />
-
+     <table>
+        <thead>
+        <tr>
+            <td><label>Nama Pamong</label></td>
+        </tr>
+    </thead>
+    
+    <tbody class="isi">
+        <tr>
+            <td><input type="text" style="width: 100%" name="nama_pamong[]" class="form-control" list="pamong" autocomplete="off" placeholder="Nama Pamong" required></td>
+            <td><a href="#confidensial" style="margin: 15px;" class="btn btn-success tambahs"><i class="fas fa-plus"></i></a></td>
+        </tr>
+    </tbody>
+    </table>
     <button class="btn btn-primary">Tambah</button>
     </form>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="edit_kategori" class="overlay">
+
+<datalist id="pamong">
+    @foreach($data3 as $d)
+        <option value="{{ $d->user->name }}">
+    @endforeach
+</datalist>
+
+<script>
+    $('.tambahs').on('click',function(){
+        var isi = `<tr>
+            <td><input type="text" style="width: 100%" name="nama_pamong[]" class="form-control" placeholder="Nama Pamong" list="pamong" autocomplete="off" required></td>
+            <td><a href="#confidensial" style="margin: 15px;" class="btn btn-danger hapus"><i class="fas fa-minus"></i></a></td>
+        </tr>`;
+        $('.isi').append(isi);
+    })
+
+    $('.isi').delegate('.hapus','click',function(){
+        $(this).parent().parent().remove();
+    })
+</script>
+
+{{-- <div id="edit_kategori" class="overlay">
     <div class="info">
         <div class="lol">
     

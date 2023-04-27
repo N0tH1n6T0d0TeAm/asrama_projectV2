@@ -14,6 +14,8 @@ use App\Models\Laporan_Perkembangan;
 use App\Models\KategoriMasalah;
 use App\Models\ModelHasRoles;
 use App\Models\Workspace;
+use App\Models\Password;
+use App\Models\Confidensial;
 use Dompdf\Dompdf;
 use Illuminate\Database\Eloquent\Model;
 use Image;
@@ -139,7 +141,8 @@ class AsramaProject extends Controller
     public function detail_perkembangan($nis){
         $tabel = Siswa::find($nis);
         $tabel2 = Laporan_Perkembangan::where("nis_siswas",$nis)->get();
-        return view('laporan_asrama.detail_laporan',["data" => $tabel,"data2"=>$tabel2]);
+        $tabel3 = Password::all();
+        return view('laporan_asrama.detail_laporan',["data" => $tabel,"data2"=>$tabel2,"data3" => $tabel3]);
     }
 
     public function rentang_tanggal(Request $req, $nis)
@@ -171,6 +174,7 @@ class AsramaProject extends Controller
         $tabel->judul_buku = $req->judul;
         $tabel->id_pengguna = $req->id_pengguna;
         $tabel->nis_siswas = $req->nis_siswa;
+        $tabel->level_kategori = "Tidak Ada Kategori";
         $tabel->tanggal = $req->tanggal;
         $tabel->save();
         return back();
@@ -192,17 +196,43 @@ class AsramaProject extends Controller
     public function edit_catatan($id){
         $tabel = Laporan_Perkembangan::find($id);
         $tabel2 = KategoriMasalah::all();
-        return view('laporan_asrama.edit_catatan', ["data" => $tabel,"data2" => $tabel2]);
+        $tabel3 = ModelHasRoles::with('user')->where('role_id','6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.edit_catatan', ["data" => $tabel,"data2" => $tabel2,"data3" => $tabel3]);
+    }
+
+    public function tambah_confidensial(Request $req){
+        
+        $id_perkembangan = $req->id_perkembangan;
+        
+        $tabel = Laporan_Perkembangan::find($id_perkembangan);
+        $tabel->level_kategori = "Confidensial";
+        $tabel->update();
+        
+        foreach ($req->nama_pamong as $key => $value) {
+            $tabel2 = new Confidensial();
+            $tabel2->id_perkembangan = $id_perkembangan;
+            $tabel2->nama_pamong = $req->nama_pamong[$key];
+            $tabel2->save();
+        }
+        return back();
     }
 
     public function beri_catatan(Request $req){
-        $ids = $req->ids;
-        $tabel = Laporan_Perkembangan::find($ids);
-        $tabel->judul_buku = $req->judul_buku;
-        $tabel->id_kategori = $req->id_kategori;
-        $tabel->isi_buku = $req->isi_buku;
-        $tabel->id_kategori = $req->id_kategori;
-        $tabel->update();
+        if($req->level_kategori == "Umum"){
+            $ids = $req->ids;
+            $tabel = Laporan_Perkembangan::find($ids);
+            $tabel->judul_buku = $req->judul_buku;
+            $tabel->level_kategori = $req->level_kategori;
+            $tabel->isi_buku = $req->isi_buku;
+            $tabel->update();
+        }else{
+            $ids = $req->ids;
+            $tabel = Laporan_Perkembangan::find($ids);
+            $tabel->judul_buku = $req->judul_buku;
+            $tabel->isi_buku = $req->isi_buku;
+            $tabel->update();
+        }
+        
         return back();
     }
 

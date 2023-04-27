@@ -2,7 +2,6 @@
 @section('title',$data->nama_siswa)
 @section('content')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
-
 <style>
     .overlay h2{
     font-size: 20px;
@@ -74,6 +73,8 @@ a.keluar{
 <br>
 
 @foreach($data2 as $d)
+
+    @if(auth()->user()->id == $d->id_pengguna && $d->level_kategori == "Tidak Ada Kategori")
     <div class="card">
   <div class="card-header">
     {{tgl_indo($d->tanggal)}} @if(auth()->user()->id == $d->id_pengguna)<a href="#" style="float: right;" id_info="{{$d->id_perkembangan}}" class="btn btn-danger hapus"><i class="fa fa-trash"></i></a>@else @endif
@@ -81,10 +82,36 @@ a.keluar{
   <div class="card-body">
     <h5 class="card-title">{{$d->judul_buku}}</h5>
     <p class="card-text">Penulis: <b>@if(auth()->user()->id == $d->id_pengguna)<b>Anda</b> @else {{$d->pengguna->name}}@endif</b></p>
-    <p>Kategori: <b>{{$d->kategori->level_kategori ?? ""}}</b></p>
+    <p>Kategori: <b>{{$d->level_kategori ?? ""}}</b></p>
     <a href="/catatan_perkembangan/{{$d->id_perkembangan}}" class="btn btn-primary">Pergi Sekarang</a>
   </div>
 </div><br>
+@elseif($d->level_kategori == "Umum")
+<div class="card">
+  <div class="card-header">
+    {{tgl_indo($d->tanggal)}} @if(auth()->user()->id == $d->id_pengguna)<a href="#" style="float: right;" id_info="{{$d->id_perkembangan}}" class="btn btn-danger hapus"><i class="fa fa-trash"></i></a>@else @endif
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{$d->judul_buku}}</h5>
+    <p class="card-text">Penulis: <b>@if(auth()->user()->id == $d->id_pengguna)<b>Anda</b> @else {{$d->pengguna->name}}@endif</b></p>
+    <p>Kategori: <b>{{$d->level_kategori ?? ""}}</b></p>
+    <a href="/catatan_perkembangan/{{$d->id_perkembangan}}" class="btn btn-primary">Pergi Sekarang</a>
+  </div>
+</div><br>
+
+@elseif($d->level_kategori == "Confidensial" && $d->confidensial->id_perkembangan == $d->id_perkembangan && auth()->user()->name == $d->confidensial->nama_pamong || auth()->user()->id == $d->id_pengguna)
+<div class="card">  
+  <div class="card-header">
+    {{tgl_indo($d->tanggal)}} @if(auth()->user()->id == $d->id_pengguna)<a href="#" style="float: right;" id_info="{{$d->id_perkembangan}}" class="btn btn-danger hapus"><i class="fa fa-trash"></i></a>@else @endif
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{$d->judul_buku}}</h5>
+    <p class="card-text">Penulis: <b>@if(auth()->user()->id == $d->id_pengguna)<b>Anda</b> @else {{$d->pengguna->name}}@endif</b></p>
+    <p>Kategori: @if(auth()->user()->id == $d->id_pengguna)<b>Confidensial</b> @else <b>Confidensial [Untuk Anda Dari Penulis]</b>@endif </p>
+    <a href="/catatan_perkembangan/{{$d->id_perkembangan}}" class="btn btn-primary">Pergi Sekarang</a>
+  </div>
+</div><br>
+@endif
 @endforeach
 
 <div id="tambah_judul" class="overlay">

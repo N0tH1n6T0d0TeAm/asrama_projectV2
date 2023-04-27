@@ -19,7 +19,7 @@ class LaporanPerkembanganSiswa extends Migration
             $table->string('isi_buku',4000)->nullable();
             $table->string('nis_siswas')->nullable();
             $table->string('id_pengguna')->nullable();
-            $table->string('id_kategori')->nullable();
+            $table->enum("level_kategori", ['Umum','Confidensial','Tidak Ada Kategori'])->nullable();
             $table->string('tanggal')->nullable();
             
             $table->timestamps();
