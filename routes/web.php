@@ -143,7 +143,7 @@ Route::group(["middleware" => "auth"], function () {
 
     Route::view('profil_postingan', 'laporan_asrama.profil_postingan');
 
-    Route::get('profil_postingan/{id_pengguna}', [AsramaProject::class, 'profil_postingan']);
+    Route::get('profil_postingan/{id}',[AsramaProject::class,'profil_postingan']);
 
     Route::view('workspace', 'laporan_asrama.workspace');
 
@@ -177,6 +177,12 @@ Route::group(["middleware" => "auth"], function () {
 
     Route::post('tambah_confidensial',[AsramaProject::class,'tambah_confidensial']);
 
+
+    Route::view('setting_profile','laporan_asrama.setting_profile');
+    
+    Route::get('setting_profile/{id}',[AsramaProject::class,'setting_profile']);
+    
+    Route::put('update_profile',[AsramaProject::class,'update_profile']);
     #-------------------------------------------------------------------------------------------------------------#
 
     Route::view('test_saja', 'testing.mytest');

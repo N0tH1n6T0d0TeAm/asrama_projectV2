@@ -66,6 +66,10 @@ class User extends Authenticatable
         }
     }
 
+    public function laporan(){
+        return $this->belongsTo(LaporanPost::class,'id');
+    }
+
     
 
 }

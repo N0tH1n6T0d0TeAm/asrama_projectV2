@@ -16,6 +16,7 @@ use App\Models\ModelHasRoles;
 use App\Models\Workspace;
 use App\Models\Password;
 use App\Models\Confidensial;
+use App\Models\User;
 use Dompdf\Dompdf;
 use Illuminate\Database\Eloquent\Model;
 use Image;
@@ -53,7 +54,7 @@ class AsramaProject extends Controller
     public function lihat_post($id)
     {
         $tabel = LaporanPost::find($id);
-        $murid = Siswa::all();
+        $murid = Siswa::where('jenis_kelamin','L')->get();
         return view('laporan_asrama.postingan', ["data" => $tabel, "murid" => $murid]);
     }
 
@@ -92,9 +93,10 @@ class AsramaProject extends Controller
     {
         $tabel = LaporanPost::all();
         $tabel2 = ModelRole::where('model_id', auth()->user()->id)->get();
-        return view('laporan_asrama.laporan_harian', ["datas" => $tabel, "datas2" => $tabel2]);
+        $table3 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.laporan_harian', ["datas" => $tabel, "datas2" => $tabel2,'data3'=>$table3]);
     }
-
+ //
     public function edit_post($id)
     {
         $tabel = LaporanPost::find($id);
@@ -287,10 +289,11 @@ class AsramaProject extends Controller
         return back();
     }
 
-    public function profil_postingan($id_pengguna){
-        $tabel = LaporanPost::where('id_pengguna',$id_pengguna)->get();
-        $hitungPost = LaporanPost::where('id_pengguna',$id_pengguna)->count();
-        return view('laporan_asrama.profil_postingan',['data' => $tabel,'hitung' => $hitungPost]);
+    public function profil_postingan($id){
+        $tabel = User::find($id);
+        $tabel2 = LaporanPost::where('id_pengguna',$id)->get();
+        $tabel3 = LaporanPost::where('id_pengguna',$id)->count();
+        return view('laporan_asrama.profil_postingan',['data' => $tabel,'data2' => $tabel2,'hitung'=>$tabel3]);
     }
 
     public function workspace(){
@@ -376,6 +379,20 @@ class AsramaProject extends Controller
     {
         isi_workspace::where('id_workspace', $id_workspace)->update(['cek' => '0']); 
         isi_workspace::where('id_bagian', $ids)->update(['status' => $inputs]);
+        return back();
+    }
+
+    public function setting_profile($id){
+        $tabel = User::find($id);
+        return view('laporan_asrama.setting_profile',['data'=>$tabel]);
+    }
+
+    public function update_profile(Request $req){
+        $ids = $req->ids;
+        $tabel = User::find($ids);
+        $tabel->name = $req->nama;
+        $tabel->active = $req->bio;
+        $tabel->update();
         return back();
     }
     

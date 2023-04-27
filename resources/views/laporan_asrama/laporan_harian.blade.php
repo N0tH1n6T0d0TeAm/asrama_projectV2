@@ -73,63 +73,62 @@
             width: 97%;
         }
 
+        .overlay h2{
+    font-size: 20px;
+    margin-left: 5px;
+}
+.overlay{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.8);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+        z-index: 2148;
+}
+.overlay:target{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.3s ease-in-out;
+}
+.overlay .info input{
+    margin: 5px 10px auto;
+    width: 90%;
+}
 
-        .info {
-            overflow-y: sroll;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.8);
-            transition: opacity 500ms;
-            visibility: hidden;
-            opacity: 0;
-            z-index: 2148;
-        }
-
-        .overlay:target {
-            visibility: visible;
-            opacity: 1;
-            transition: 0.3s;
-        }
-
-        .overlay .info input {
-            margin: 5px 10px auto;
-            width: 90%;
-        }
-
-        .overlay .info select {
-            margin-left: 5px;
-            width: 30em;
-        }
-
-        .overlay .info label {
-            margin-left: 5px;
-        }
-
-        .info .lol {
-            margin: 3% 30% auto;
-            background: #fff;
-            width: 40%;
-            border-radius: 3px;
-            padding: 10px 0;
-            overflow-y: visible;
-        }
-
-        .lol button {
-            float: right;
-            margin: 10px;
-        }
-
-        a.keluar {
-            float: right;
-            color: black;
-            text-decoration: none;
-        }
+.overlay .info select{
+    margin: 5px 10px auto;
+    width: 90%;
+}
+.overlay .info label{
+    margin-left: 5px;
+}
+.info .lol{
+    margin: 5% 30% auto;
+    background: #fff;
+    width: 40%;
+    border-radius: 3px;
+    padding: 70px 0;
+}
+.overlay .info button{
+    float: right;
+    margin: 10px;
+}
+a.keluar{
+    float: right;
+    color: black;
+    text-decoration: none;
+}
+.overlay .info .textarea{
+    width: 90%;
+    margin: 0 10px;
+}
+.isinya{
+    position: relative; top: -3em;
+}
 
         .show-hide {
             position: absolute;
@@ -158,6 +157,21 @@
             margin: 5px 0px 0px 120px;
             border-radius: 5%;
         }
+
+
+#myList li {
+    list-style: none;
+    background: #F1DDDD;
+    text-indent: 0em;
+    padding-left: 1em;
+    margin-left: -2em;
+}
+
+#myList li:hover{
+    background: #fff;
+    cursor:pointer;
+}
+
 
 
         @media(max-width: 500px) {
@@ -351,6 +365,7 @@
     <div id="tambah" class="overlay">
         <div class="info">
             <div class="lol lolz">
+                <div class="isinya">
                 <form id="upload-form" action="{{ route('tambah_laporan') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id_roles" value="@foreach ($datas2 as $d) {{ $d->role_id }} @endforeach">
@@ -365,15 +380,21 @@
                         <input type="file" id="file-input" class="file" accept="image/*" multiple name="gambar[]">
                     </label>
                 </form>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="autocomplete">
     <center>
-    <form action="cari_profil" method="GET">
-        <input type="search" autocomplete="off" class="form-control" name="nama" placeholder="Cari...">
-    </form>
-</center>
+     <input type="search" id="myInput" autocomplete="off" class="form-control" name="nama" placeholder="Cari...">
+     </center>
+
+     <ul id="myList">
+        
+     </ul>
+     </div>
+
     <a href="#tambah"><button type="button" class="tambah">+</button></a>
 
 
@@ -385,12 +406,12 @@
 
         <div class="card">
 
-            <img class="profil" src="https://wallpaperset.com/w/full/c/b/e/534560.jpg"> <b
-                style="margin-left: 3em;margin-top: -2.3em;">{{ $i->pengguna->name }} ({{ $i->role->name }}) <a
+            <img class="profil" src="https://wallpaperset.com/w/full/c/b/e/534560.jpg"><b
+                style="margin-left: 3em;margin-top: -2.3em;"><a href="/profil_postingan/{{$i->pengguna->id}}">{{ $i->pengguna->name }} ({{ $i->role->name }})</a> <i style="font-weight: 300">Bersama</i> {{$i->nama_siswass}}<a
                     href="#sub-pilihan/{{$i->id_laporan}}"><i style="float: right; cursor: pointer"
                         class="bi bi-three-dots-vertical pilihan"></i></a></b><br>
                         
-            <a href="#detail/{{ $i->id_laporan }}" class="detail_gambar" post_detail="{{ $i->id_laporan }}"><img
+            <a href="#detail/{{ $i->id_laporan }}" onclick="openModal()" class="detail_gambar" post_detail="{{ $i->id_laporan }}"><img
                     class="card-img-top" src="{{ asset('postingan/' . $images[0]) }}" alt="Card image cap"></a>
 
 
@@ -398,7 +419,7 @@
             <div class="card-body">
                 <details>
                     <summary class="card-text">{{ $i->deskripsi ?? 'Tidak Ada Deskripsi' }}</summary>
-                    <p>{{ $i->deskripsi }} <b>({{ $i->nama_siswass ?? 'Kosong' }})</b></p>
+                    <p>{{ $i->deskripsi }}</p>
                 </details>
             </div>
         </div>
@@ -407,40 +428,87 @@
 
         <div id="sub-pilihan/{{$i->id_laporan}}" class="overlay">
             <div class="info">
-                <div class="lol" style="background: black; text-align: center">
+                <div class="lol" style="background: black; text-align: center;">
+                    <div class="isinya">
                     <b><a href="/kembali/{{ $i->id_laporan }}/" class="opsi_post" style="color: red;">Hapus</a></b><br>
                     <hr style="border: 1px solid #fff">
-                    <a href="#edit" class="edit_post" id_post="{{ $i->id_laporan }}" style="color: #fff;">Edit</a>
+                    <a href="#edit/{{$i->id_laporan}}" class="edit_post" id_post="{{ $i->id_laporan }}" style="color: #fff;">Edit</a>
                     <hr style="border: 1px solid #fff">
                     <a href="#" style="color: #fff;">Keluar</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="edit" class="overlay">
-            <div class="info">
-                <div class="lol" style="background: black;">
-                    <a href="#" style="color: #fff; margin-left: 10px;">Keluar</a>
-                    <b style="color: #fff; margin-left: 13em;">Edit Info</b>
-                    <img class="edit_gambar">
-                </div>
+        <div id="edit/{{$i->id_laporan}}" class="overlay">
+        <div class="info">
+            <div class="lol">
+                <div class="isinya">
+        <form action="/tambah_perkembangan" method="POST">
+        @csrf
+        <h2>Edit Info <a href="#" class="keluar">&times</a></h2>
+        <hr style="border: 1px solid black;margin-top: -3px;">
+
+        <img class="profil" src="https://wallpaperset.com/w/full/c/b/e/534560.jpg"><b
+                style="margin-left: 3em;margin-top: -2.3em;"><a href="/profil_postingan/{{$i->pengguna->id}}">{{ $i->pengguna->name }} ({{ $i->role->name }})</a><br>
+         <textarea name="isi_buku" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
+
+        <button class="btn btn-primary">Tambah</button>
+        </form>
             </div>
         </div>
+            </div>
+</div>
 
         <div id="detail/{{ $i->id_laporan }}" class="overlay" style="overflow-y:scroll">
             <div class="info">
                 <div class="lol">
+                    <div class="isinya">
                     <h2>Detail Post Laporan<a href="#" class="keluar">&times</a></h2>
                     @foreach ($images as $img)
                         <img class="detail_foto" src="{{ asset('postingan/' . $img) }}" id="detail_foto">
                     @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     @endforeach
 
 
-    <script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+  const options = [
+    @foreach($data3 as $d)
+    { label: '{{$d->user->name}}', value: '/profil_postingan/{{$d->user->id}}'},
+    @endforeach
+  ];
+
+  // Fungsi untuk menampilkan autocomplete
+  function showAutocomplete(inputValue) {
+    const filteredOptions = options.filter(option => option.label.toLowerCase().includes(inputValue));
+    $('#myList').html('');
+    filteredOptions.forEach(option => {
+      const li = $('<li/>').text(option.label);
+      li.on('click', function() {
+        window.location.href = option.value;
+      });
+      $('#myList').append(li);
+    });
+  }
+
+  // Event listener untuk input pencarian
+  $('#myInput').on('input', function() {
+    const inputValue = $('#myInput').val().toLowerCase();
+    if (inputValue === '') {
+      $('#myList').html('');
+    } else {
+      showAutocomplete(inputValue);
+    }
+  });
+
+});
+
         $(function() {
             $('#file-input').on('change', function() {
 

@@ -12,8 +12,8 @@
    height: 170px;
    width: 178px;
    border-radius: 50%;
-   cursor: pointer;
    margin-left: 10em;
+   cursor: pointer;
 }
 
 .foto_profil:hover{
@@ -37,8 +37,8 @@ p{
 }
 .postingan{
     height: 260px;
-    width: 27%;
-    margin: 2px;
+    width: 20%;
+    margin: 10px;
 }
 .postingan:hover{
     opacity: 0.5;
@@ -131,80 +131,27 @@ a.keluar{
     width: 10em;
 }
 
-@media(max-width: 600px){
-    .profil{
-        position: relative;
-        left: -10em;
-    }
-    .profil h2{
-        position: relative;
-        left: 1em;
-        top: -2em;
-    }
-    .profil .pengaturan{
-        position: relative;
-        left: 4.5em;
-        top: -1.3em;
-    }
-    .profil b{
-        position: relative;
-        left: -5em;
-        top: -5em;
-    }
-    .profil .bio{
-        position: relative;
-        font-size: 14px;
-        line-height: 1.2;   
-        margin: 17px 0em;
-        left: 12em;
-    }
-
-    .postingan{
-        height: 7em;
-        width: 30%;
-    }
-    .detail_post{
-    width: 90%;
-    position: relative;
-    left: 0.5em;
-    }   
-    .deskripsi{
-        position: relative;
-        left: -18em;
-        top: 12em;
-    }
-    .foto{
-        position: relative;
-        left: -7.7em;
-        height: 80px;
-    }
-    
-}
-
-
 </style>
 
 <div class="profil">
 <img src="{{asset('img/mobil.jpg')}}" class="foto_profil" alt="lol">
-<h2>{{$data->name}} @if($data->id == auth()->user()->id) <a href="/setting_profile/{{$data->id}}"><i class="fa fa-cog pengaturan"></i></a>@endif</h2>
-<br>
-
+<h2>{{$data[0]->pengguna->name}}</h2>
 <b>{{$hitung}}</b><b class="kiriman" style="font-weight: 400">Kiriman</b>
-<p class="bio">{!! nl2br($data->active)!!}</p>
-</div><br><br>
+<p>{{$data[0]->pengguna->active ?? 'Bio Tidak Ada'}}</p>
+</div><br>
+
 <div class="postingannya">
 <hr style="border: 1px solid black">
-@foreach($data2 as $i)
+@foreach($data as $i)
 @php
 $gambar = explode('|',$i->gambar)
 @endphp
 
 <a href="#lihat_post/{{$i->id_laporan}}"><img src="{{asset('postingan/' . $gambar[0])}}" alt="postingan" class="postingan"></a>
-
 @endforeach
 </div>
 
-@foreach ( $data2 as $d)
+@foreach ( $data as $d)
     
 @php
 $gambar_detail = explode('|',$d->gambar);
@@ -240,7 +187,7 @@ $gambar_detail = explode('|',$d->gambar);
                     
                     <h2>Detail Post Laporan<a href="#" class="keluar">&times</a></h2>
                     @foreach($gambar_detail as $gams)
-                        <img class="detail_foto foto" src="{{asset('postingan/' . $gams)}}" id="detail_foto">
+                        <img class="detail_foto" src="{{asset('postingan/' . $gams)}}" id="detail_foto">
                         @endforeach
                 </div>
             </div>
@@ -248,5 +195,6 @@ $gambar_detail = explode('|',$d->gambar);
 
   @endforeach
      
-</div>
+
+ 
 @endsection
