@@ -95,7 +95,7 @@ Route::group(["middleware" => "auth"], function () {
 
     Route::view('postingan', 'laporan_asrama.postingan');
 
-
+    
 
 
     Route::view('laporan_perkembangan', 'laporan_asrama.laporan_perkembangan');
@@ -183,6 +183,12 @@ Route::group(["middleware" => "auth"], function () {
     Route::get('setting_profile/{id}',[AsramaProject::class,'setting_profile']);
     
     Route::put('update_profile',[AsramaProject::class,'update_profile']);
+
+    Route::view('master','layouts.master');
+    
+    Route::get('master',[AsramaProject::class,'master']);
+
+    Route::get('/beranda', [AsramaProject::class, "beranda"])->name("beranda");
     #-------------------------------------------------------------------------------------------------------------#
 
     Route::view('test_saja', 'testing.mytest');
@@ -251,7 +257,7 @@ Route::group(["middleware" => "auth"], function () {
     Route::post('hakakseskelas/tambah', [SuperAppController::class, "tambahhakakseskelas"])->name("admin.konfigurasiumum.pengguna.hak.tambah");
 
     //Route Home
-    Route::get('/beranda', [SuperAppController::class, "beranda"])->name("beranda");
+   
     Route::get('/listsiswa', [SuperAppController::class, "listsiswa"])->name("listsiswa");
 
     //Konseling

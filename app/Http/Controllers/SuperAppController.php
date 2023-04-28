@@ -157,10 +157,11 @@ class SuperAppController extends Controller
                     ];
             }
         }
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
 
         //d($kelas);
 
-        return view("datasiswa.index", ["jurusan" => $jurusan, "angkatan" => $angkatan, "kelas" => $kelas, "siswa" => $siswa]);
+        return view("datasiswa.index", ["jurusan" => $jurusan, "angkatan" => $angkatan, "kelas" => $kelas, "siswa" => $siswa,'data5' => $table5]);
     }
 
     public function carisiswa(Request $req)

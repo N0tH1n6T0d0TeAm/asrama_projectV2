@@ -2,6 +2,7 @@
 @section('content')
 
 <style>
+
     .detail_foto {
             height: 200px;
             margin: 5px 0px 0px 125px;
@@ -131,6 +132,13 @@ a.keluar{
     width: 10em;
 }
 
+.pilihan{
+    position: relative;
+    left: 15em;
+    top: -2em;
+    color: blue;
+}
+
 @media(max-width: 600px){
     .profil{
         position: relative;
@@ -138,8 +146,9 @@ a.keluar{
     }
     .profil h2{
         position: relative;
-        left: 1em;
-        top: -2em;
+        left: 8.7em;
+        top: -5em;
+        font-size: 17px;
     }
     .profil .pengaturan{
         position: relative;
@@ -178,6 +187,11 @@ a.keluar{
         left: -7.7em;
         height: 80px;
     }
+    .pilihan{
+        position: relative;
+        left: 2.5em;
+        top: -2px;
+    }
     
 }
 
@@ -214,6 +228,7 @@ $gambar_detail = explode('|',$d->gambar);
         <div class="info">
             <div class="lol">
         <h2>Post<a href="#" class="keluar">&times</a></h2>
+        @if(auth()->user()->id == $d->pengguna->id)<a href="#edit" ids="{{$d->id_laporan}}" class="pilihan edits">Edit Postingan</a>@endif
         <hr style="border: 1px solid black;margin-top: -3px;">
         
         <div class="gambar">
@@ -249,4 +264,39 @@ $gambar_detail = explode('|',$d->gambar);
   @endforeach
      
 </div>
+
+<div id="edit" class="overlay">
+        <div class="info">
+            <div class="lol">
+                <div class="isinya">
+    
+        <h2>Edit Info <a href="#" class="keluar">&times</a></h2>
+        <hr style="border: 1px solid black;margin-top: -3px;">
+        
+         <textarea name="isi_buku" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
+
+        <a href="#edit" class="update_sekarang" ><button class="btn btn-success">Tambah</button></a>
+
+            </div>
+        </div>
+            </div>
+</div>
+
+<script>
+
+   
+
+    $('.edits').on('click',function(){
+        var ids = $(this).attr('ids');
+        
+        $.ajax({
+                type: "GET",
+                url: "/edit_post/" + ids,
+                success: function(response) {
+                    console.log(response.tampil.deskripsi);
+                    $('.area').val(response.tampil.deskripsi);
+                }
+            })
+        });
+</script>
 @endsection

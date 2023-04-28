@@ -385,6 +385,8 @@ a.keluar{
         </div>
     </div>
 
+    {{-- CARIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII --}}
+
     <div class="autocomplete">
     <center>
      <input type="search" id="myInput" autocomplete="off" class="form-control" name="nama" placeholder="Cari...">
@@ -394,6 +396,8 @@ a.keluar{
         
      </ul>
      </div>
+
+     {{-- CARIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII --}}
 
     <a href="#tambah"><button type="button" class="tambah">+</button></a>
 
@@ -407,9 +411,9 @@ a.keluar{
         <div class="card">
 
             <img class="profil" src="https://wallpaperset.com/w/full/c/b/e/534560.jpg"><b
-                style="margin-left: 3em;margin-top: -2.3em;"><a href="/profil_postingan/{{$i->pengguna->id}}">{{ $i->pengguna->name }} ({{ $i->role->name }})</a> <i style="font-weight: 300">Bersama</i> {{$i->nama_siswass}}<a
-                    href="#sub-pilihan/{{$i->id_laporan}}"><i style="float: right; cursor: pointer"
-                        class="bi bi-three-dots-vertical pilihan"></i></a></b><br>
+                style="margin-left: 3em;margin-top: -2.3em;"><a href="/profil_postingan/{{$i->pengguna->id}}">{{ $i->pengguna->name }} ({{ $i->role->name }})</a> <i style="font-weight: 300">Bersama</i> {{$i->nama_siswass}}
+             @if(auth()->user()->id == $i->pengguna->id)   <a href="#sub-pilihan/{{$i->id_laporan}}"><i style="float: right; cursor: pointer"
+                        class="bi bi-three-dots-vertical pilihan"></i></a> @endif</b><br>
                         
             <a href="#detail/{{ $i->id_laporan }}" onclick="openModal()" class="detail_gambar" post_detail="{{ $i->id_laporan }}"><img
                     class="card-img-top" src="{{ asset('postingan/' . $images[0]) }}" alt="Card image cap"></a>
@@ -524,10 +528,8 @@ a.keluar{
                 type: "GET",
                 url: "/edit_post/" + id_post,
                 success: function(response) {
-                    console.log(response.tampil.gambar)
-                    var img = response.tampil.gambar;
-                    var split = img.replace(/\|/g, ' ');
-                    console.log(split);
+                    console.log(response.tampil.deskripsi);
+                    $('.area').val(response.tampil.deskripsi);
                 }
             })
         })

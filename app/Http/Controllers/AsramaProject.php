@@ -94,7 +94,8 @@ class AsramaProject extends Controller
         $tabel = LaporanPost::all();
         $tabel2 = ModelRole::where('model_id', auth()->user()->id)->get();
         $table3 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
-        return view('laporan_asrama.laporan_harian', ["datas" => $tabel, "datas2" => $tabel2,'data3'=>$table3]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.laporan_harian', ["datas" => $tabel, "datas2" => $tabel2,'data3'=>$table3,'data5'=>$table5]);
     }
  //
     public function edit_post($id)
@@ -111,7 +112,8 @@ class AsramaProject extends Controller
         $tabel = Siswa::where('jenis_kelamin','L')->Where('status','aktif')->get();
         $tabel2 = Jurusan::all();
         $tabel3 = Angkatan::all();
-        return view('laporan_asrama.laporan_perkembangan', ['data' => $tabel, 'data2' => $tabel2,'data3' => $tabel3]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.laporan_perkembangan', ['data' => $tabel, 'data2' => $tabel2,'data3' => $tabel3,'data5' => $table5]);
     }
 
     public function cari_siswa(Request $req)
@@ -144,7 +146,8 @@ class AsramaProject extends Controller
         $tabel = Siswa::find($nis);
         $tabel2 = Laporan_Perkembangan::where("nis_siswas",$nis)->get();
         $tabel3 = Password::all();
-        return view('laporan_asrama.detail_laporan',["data" => $tabel,"data2"=>$tabel2,"data3" => $tabel3]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.detail_laporan',["data" => $tabel,"data2"=>$tabel2,"data3" => $tabel3,'data5' => $table5]);
     }
 
     public function rentang_tanggal(Request $req, $nis)
@@ -184,7 +187,8 @@ class AsramaProject extends Controller
 
     public function catatan_perkembangan($id){
         $tabel = Laporan_Perkembangan::find($id);
-        return view('laporan_asrama.catatan_perkembangan', ["data" => $tabel]);
+         $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.catatan_perkembangan', ["data" => $tabel,'data5' => $table5]);
     }
     
 
@@ -199,7 +203,13 @@ class AsramaProject extends Controller
         $tabel = Laporan_Perkembangan::find($id);
         $tabel2 = KategoriMasalah::all();
         $tabel3 = ModelHasRoles::with('user')->where('role_id','6')->orWhere('role_id', '9')->get();
-        return view('laporan_asrama.edit_catatan', ["data" => $tabel,"data2" => $tabel2,"data3" => $tabel3]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.edit_catatan', ["data" => $tabel,"data2" => $tabel2,"data3" => $tabel3,'data5' => $table5]);
+    }
+
+    public function beranda(){
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+         return view('beranda.index', ['data5' => $table5]);
     }
 
     public function tambah_confidensial(Request $req){
@@ -279,7 +289,8 @@ class AsramaProject extends Controller
     public function status_siswa(){
         $tabel = Siswa::where('status','tidak aktif')->get();
         $tabel2 = Siswa::where('status','alumni')->get();
-        return view('laporan_asrama.status_siswa', ["data" => $tabel,'data2' => $tabel2]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.status_siswa', ["data" => $tabel,'data2' => $tabel2,'data5' => $table5]);
     }
 
     public function status_aktif($ids){
@@ -293,13 +304,15 @@ class AsramaProject extends Controller
         $tabel = User::find($id);
         $tabel2 = LaporanPost::where('id_pengguna',$id)->get();
         $tabel3 = LaporanPost::where('id_pengguna',$id)->count();
-        return view('laporan_asrama.profil_postingan',['data' => $tabel,'data2' => $tabel2,'hitung'=>$tabel3]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.profil_postingan',['data' => $tabel,'data2' => $tabel2,'hitung'=>$tabel3,'data5' => $table5]);
     }
 
     public function workspace(){
         $tabel = ModelHasRoles::where('role_id','6')->get();
         $tabel2 = Workspace::all();
-        return view('laporan_asrama.workspace',['data' => $tabel,'data2' => $tabel2]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.workspace',['data' => $tabel,'data2' => $tabel2,'data5' => $table5]);
     }
 
     public function tambah_tugas(Request $req){
@@ -327,7 +340,8 @@ class AsramaProject extends Controller
     public function lihat_tugas_pamong(){
         $tabel = Workspace::where("id_pamong", auth()->user()->id)->get();
         $tabel2 = isi_workspace::where('cek','0')->count();
-        return view('laporan_asrama.dashboard_pamong',['data' => $tabel,'hitung'=>$tabel2]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.dashboard_pamong',['data' => $tabel,'hitung'=>$tabel2,'data5'=>$table5]);
     }
 
     public function udah_selesai($id){
@@ -384,7 +398,8 @@ class AsramaProject extends Controller
 
     public function setting_profile($id){
         $tabel = User::find($id);
-        return view('laporan_asrama.setting_profile',['data'=>$tabel]);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.setting_profile',['data'=>$tabel,'data5' => $table5]);
     }
 
     public function update_profile(Request $req){
@@ -394,6 +409,11 @@ class AsramaProject extends Controller
         $tabel->active = $req->bio;
         $tabel->update();
         return back();
+    }
+
+    public function master(){
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('layouts.master',['data5' => $table5]);
     }
     
 }
