@@ -228,7 +228,7 @@ $gambar_detail = explode('|',$d->gambar);
         <div class="info">
             <div class="lol">
         <h2>Post<a href="#" class="keluar">&times</a></h2>
-        @if(auth()->user()->id == $d->pengguna->id)<a href="#edit" ids="{{$d->id_laporan}}" class="pilihan edits">Edit Postingan</a>@endif
+        @if(auth()->user()->id == $d->pengguna->id)<a href="#edit/{{$d->id_laporan}}" ids="{{$d->id_laporan}}" class="pilihan edits">Edit Postingan</a>@endif
         <hr style="border: 1px solid black;margin-top: -3px;">
         
         <div class="gambar">
@@ -261,26 +261,28 @@ $gambar_detail = explode('|',$d->gambar);
             </div>
         </div>
 
-  @endforeach
-     
-</div>
-
-<div id="edit" class="overlay">
+        <div id="edit/{{$d->id_laporan}}" class="overlay">
         <div class="info">
             <div class="lol">
                 <div class="isinya">
-    
+        
         <h2>Edit Info <a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
         
-         <textarea name="isi_buku" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
+         <textarea name="isi_buku" id="{{$d->id_laporan}}" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
 
-        <a href="#edit" class="update_sekarang" ><button class="btn btn-success">Tambah</button></a>
-
+        <a href="#" class="updates" id_update="{{$d->id_laporan}}"><button class="btn btn-primary">Simpan</button></a>
             </div>
         </div>
             </div>
 </div>
+  @endforeach
+     
+</div>
+
+
+
+
 
 <script>
 
@@ -298,5 +300,12 @@ $gambar_detail = explode('|',$d->gambar);
                 }
             })
         });
+
+        $('.updates').on('click',function(){
+            var ids = $(this).attr('id_update');
+            var inputs = $('#'+ids).val();
+            
+           window.location = '/update_posts/'+ids+'/'+inputs+'/';
+        })
 </script>
 @endsection

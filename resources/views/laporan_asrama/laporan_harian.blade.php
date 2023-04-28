@@ -448,17 +448,14 @@ a.keluar{
         <div class="info">
             <div class="lol">
                 <div class="isinya">
-        <form action="/tambah_perkembangan" method="POST">
-        @csrf
         <h2>Edit Info <a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
 
         <img class="profil" src="https://wallpaperset.com/w/full/c/b/e/534560.jpg"><b
-                style="margin-left: 3em;margin-top: -2.3em;"><a href="/profil_postingan/{{$i->pengguna->id}}">{{ $i->pengguna->name }} ({{ $i->role->name }})</a><br>
-         <textarea name="isi_buku" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
+                style="margin-left: 0em;margin-top: -2.3em;"><a href="/profil_postingan/{{$i->pengguna->id}}">{{ $i->pengguna->name }} ({{ $i->role->name }})</a><br>
+         <textarea name="isi_buku" id="{{$i->id_laporan}}" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
 
-        <button class="btn btn-primary">Tambah</button>
-        </form>
+        <a href="#edit/{{$i->id_laporan}}" class="updates" style="float: right" id_update="{{$i->id_laporan}}"><button class="btn btn-success">Tambah</button></a>
             </div>
         </div>
             </div>
@@ -532,6 +529,13 @@ a.keluar{
                     $('.area').val(response.tampil.deskripsi);
                 }
             })
+        })
+
+        $('.updates').on('click',function(){
+            var ids = $(this).attr('id_update');
+            var inputs = $('#'+ids).val();
+            
+            window.location = '/update_posts/'+ids+'/'+inputs+'/';
         })
     </script>
 @endsection

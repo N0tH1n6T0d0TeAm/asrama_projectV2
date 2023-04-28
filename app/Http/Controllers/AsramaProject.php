@@ -415,5 +415,12 @@ class AsramaProject extends Controller
         $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
         return view('layouts.master',['data5' => $table5]);
     }
+
+    public function update_post($ids,$inputs){
+        $tabel = LaporanPost::find($ids);
+        $tabel->deskripsi = $inputs;
+        $tabel->update();
+        return back();
+    }
     
 }

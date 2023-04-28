@@ -189,6 +189,8 @@ Route::group(["middleware" => "auth"], function () {
     Route::get('master',[AsramaProject::class,'master']);
 
     Route::get('/beranda', [AsramaProject::class, "beranda"])->name("beranda");
+
+    Route::get('update_posts/{ids}/{inputs}',[AsramaProject::class,'update_post']);
     #-------------------------------------------------------------------------------------------------------------#
 
     Route::view('test_saja', 'testing.mytest');
