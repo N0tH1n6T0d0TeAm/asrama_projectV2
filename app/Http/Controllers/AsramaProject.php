@@ -76,7 +76,7 @@ class AsramaProject extends Controller
 
         $tabel->delete();
 
-        return redirect()->route('laporan_harian');
+        return redirect()->back();
     }
 
     public function tambah_siswa(Request $req)
@@ -95,6 +95,7 @@ class AsramaProject extends Controller
         $tabel2 = ModelRole::where('model_id', auth()->user()->id)->get();
         $table3 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
         $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        $table6 = Siswa::where('jenis_kelamin','L')->get();
         return view('laporan_asrama.laporan_harian', ["datas" => $tabel, "datas2" => $tabel2,'data3'=>$table3,'data5'=>$table5]);
     }
  //
@@ -137,9 +138,10 @@ class AsramaProject extends Controller
         if ($req->filled("jurusan")) {
             $siswa = $siswa->where("id_jurusan", $req->jurusan)->where('jenis_kelamin', 'L')->Where('status', 'aktif');
         }
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
 
         // dd($siswa->get());
-        return view("laporan_asrama.laporan_perkembangan", ["data" => $siswa->get(), 'data2' => $tabel2, 'data3' => $tabel3]);
+        return view("laporan_asrama.laporan_perkembangan", ["data" => $siswa->get(), 'data2' => $tabel2, 'data3' => $tabel3,'data5' => $table5]);
     }
 
     public function detail_perkembangan($nis){
@@ -422,5 +424,26 @@ class AsramaProject extends Controller
         $tabel->update();
         return back();
     }
-    
+
+
+    public function ganti_posisi(){
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.ganti_posisi',['data5' => $table5]);
+    } 
+
+    public function ubah_posisi($ids){
+        ModelHasRoles::where('model_id',$ids)->update(['role_id' => '9']);
+        return back();    
+    }
+
+    public function turunkan($ids)
+    {
+        ModelHasRoles::where('model_id', $ids)->update(['role_id' => '6']);
+        return back();
+    }
+
+    public function piket(){
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.piket', ['data5' => $table5]);
+    }
 }

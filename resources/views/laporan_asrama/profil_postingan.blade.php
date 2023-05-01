@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
 
 <style>
 
@@ -242,7 +243,7 @@ $gambar_detail = explode('|',$d->gambar);
     <div class="deskripsi">
     <details>
             <summary class="judul_deskripsi">Deskripsi</summary>
-            <p class="isi_deskripsi">{{$d->deskripsi}}</p>
+            <p class="isi_deskripsi" style="display: flex;">{{$d->deskripsi}}</p>
         </details>
     </div>
             </div>
@@ -266,7 +267,7 @@ $gambar_detail = explode('|',$d->gambar);
             <div class="lol">
                 <div class="isinya">
         
-        <h2>Edit Info <a href="#" class="keluar">&times</a></h2>
+        <h2>Edit Info <a href="#edit/{{$d->id_laporan}}" class="btn btn-danger clicks" hapuskan="{{$d->id_laporan}}"><i class="fa fa-trash"></i></a> <a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
         
          <textarea name="isi_buku" id="{{$d->id_laporan}}" class="area" style="height: 20em; width: 100%; border: none;outline: none" placeholder="Tulis Caption Anda..."></textarea><br>
@@ -280,12 +281,15 @@ $gambar_detail = explode('|',$d->gambar);
      
 </div>
 
-
-
-
+                 
 
 <script>
 
+
+$('.clicks').on('click',function(){
+    var ids = $(this).attr('hapuskan');
+    window.location = '/kembali/'+ids;
+})
    
 
     $('.edits').on('click',function(){

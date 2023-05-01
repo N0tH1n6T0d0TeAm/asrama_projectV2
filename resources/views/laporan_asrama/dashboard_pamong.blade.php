@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Silahkan Lihat Tugas Anda!');
+@section('title','Silahkan Lihat Tugas Anda!')
 @section('content')
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
@@ -135,7 +135,6 @@ $('.check').on('click',function(){
   var ids = $(this).attr('id_check');
   var inputs = $(this).val();
 
-  //alert(id_asli + ids + inputs);
   
  window.location = '/update_detail/'+id_asli+ '/' + ids + '/' + inputs + '/';
 

@@ -23,6 +23,7 @@
     <link rel="icon" type="image/png" href="{{ asset('ui-assets/img/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
     <title>
         @yield('title')
     </title>
@@ -228,7 +229,10 @@
                                     label: '{{ $d->user->name }}',
                                     value: '/profil_postingan/{{ $d->user->id }}'
                                 },
+                                
                             @endforeach
+
+                           
                       
                     ];
 

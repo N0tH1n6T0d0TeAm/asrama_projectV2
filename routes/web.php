@@ -191,6 +191,19 @@ Route::group(["middleware" => "auth"], function () {
     Route::get('/beranda', [AsramaProject::class, "beranda"])->name("beranda");
 
     Route::get('update_posts/{ids}/{inputs}',[AsramaProject::class,'update_post']);
+
+
+    Route::view('ganti_posisi','laporan_asrama.ganti_posisi');
+
+    Route::get('ganti_posisi',[AsramaProject::class,'ganti_posisi'])->name('ganti_posisi');
+    
+    Route::get('ubah_posisi/{ids}',[AsramaProject::class,'ubah_posisi']);
+
+    Route::get('turunkan/{ids}', [AsramaProject::class, 'turunkan']);
+
+    Route::view('piket','laporan_asrama.ganti_posisi');
+
+    Route::get('piket',[AsramaProject::class,'piket']);
     #-------------------------------------------------------------------------------------------------------------#
 
     Route::view('test_saja', 'testing.mytest');

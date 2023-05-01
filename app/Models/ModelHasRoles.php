@@ -16,7 +16,9 @@ class ModelHasRoles extends Model
         "model_id"
     ];
     protected $primaryKey = "role_id";
-
+    
+    public $timestamps = false;
+    
     public function role(){
         return $this->belongsTo(Role::class, "role_id", "id");
     }
