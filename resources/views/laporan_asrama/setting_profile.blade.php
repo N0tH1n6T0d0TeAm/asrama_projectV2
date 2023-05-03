@@ -23,7 +23,7 @@
     </tr>
     <tr>
         <td></td>
-        <td>*Tekan Foto/Profil Anda Untuk Mengubah*</td>
+        <td>*Penggantian Foto Profile Masih Dalam Proses Pengembangan*</td>
     </tr>
     <tr>
         <td><b>Username</b></td>

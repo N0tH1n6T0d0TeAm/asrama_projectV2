@@ -25,7 +25,7 @@
 
         $belum_dikerjakan = $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Belum Dikerjakan')->count();
 
-        $total_data =  $sudah_dikerjakan + $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Belum Dikerjakan')->orWhere('status','Pending')->count(); 
+        $total_data =  $sudah_dikerjakan + $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Belum Dikerjakan')->count(); 
 
         $detail_tugas = $d->isi->where('id_workspace',$d->isi->id_workspace)->get();
         

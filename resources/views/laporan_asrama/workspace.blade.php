@@ -132,7 +132,7 @@ a.keluar{
 
  @php
         $sudah_dikerjakan = $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Sudah Dikerjakan')->count();
-        $total_data =  $sudah_dikerjakan + $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Belum Dikerjakan')->orWhere('status','Pending')->count(); 
+        $total_data =  $sudah_dikerjakan + $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Belum Dikerjakan')->count(); 
 
 
         $dibatalkan = $d->isi->where('id_workspace',$d->isi->id_workspace)->where('status','Pending')->count();
