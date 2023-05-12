@@ -19,7 +19,7 @@
 <table style="width: 100%">
     <tr>
         <td></td>
-        <td><img src="{{asset('img/mobil.jpg')}}" title="Ubah Foto" class="foto_profil" alt=""> {{$data->name}}</td>
+        <td><img src="{{asset('img/mobil.jpg')}}" title="Ubah Foto" class="foto_profil" alt=""> {{$data->name}} <a href="/setting_akun/{{$data->id}}" style="color: blue; font-size: 12px;">Setting Akun</a></td>
     </tr>
     <tr>
         <td></td>

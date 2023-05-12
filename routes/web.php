@@ -204,6 +204,16 @@ Route::group(["middleware" => "auth"], function () {
     Route::view('piket','laporan_asrama.ganti_posisi');
 
     Route::get('piket',[AsramaProject::class,'piket']);
+
+    Route::view('setting_akun','laporan_asrama.setting_akun');
+
+    Route::get('setting_akun/{id}',[AsramaProject::class,'setting_akun']);
+
+    Route::get('update_email/{ids}/{lol2}',[AsramaProject::class,'update_email']);
+
+    Route::get('update_password/{id_pass}/{pass}',[AsramaProject::class,'update_password']);
+    
+    
     #-------------------------------------------------------------------------------------------------------------#
 
     Route::view('test_saja', 'testing.mytest');

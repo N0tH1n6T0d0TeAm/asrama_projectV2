@@ -38,6 +38,17 @@ class AsramaProject extends Controller
             $foto[] = $nama;
         }
 
+    // public function tambah_laporan(Request $req)
+    // {
+    //     $foto = array();
+    //     foreach ($req->file('gambar') as $file) {
+    //         $nama = $file->getClientOriginalName();
+
+    //         $image =  Image::make($file);
+    //         $image->save(base_path('../postingan/' . $file->getClientOriginalName()), 50);
+    //         $foto[] = $nama;
+    //     }
+
         $tabel = new LaporanPost();
         $tabel->gambar = implode('|', $foto);
         $tabel->id_roles = $req->id_roles;
@@ -445,5 +456,26 @@ class AsramaProject extends Controller
     public function piket(){
         $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
         return view('laporan_asrama.piket', ['data5' => $table5]);
+    }
+
+    public function setting_akun($id){
+        $tabels = User::find($id);
+        $table5 = ModelHasRoles::with('user')->where('role_id', '6')->orWhere('role_id', '9')->get();
+        return view('laporan_asrama.setting_akun', ['data'=>$tabels,'data5' => $table5]);
+    }
+
+    public function update_email($ids, $lol2){
+        $tabels = User::find($ids);
+        $tabels->email = $lol2;
+        $tabels->update();
+        return 'success';
+    }
+
+    public function update_password($id_pass, $pass)
+    {
+        $tabels = User::find($id_pass);
+        $tabels->password = bcrypt($pass);
+        $tabels->update();
+        return 'success';
     }
 }
